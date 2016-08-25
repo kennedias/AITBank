@@ -5,6 +5,8 @@
  */
 package com.aitbank;
 
+import com.aitbank.model.SavingsAccount;
+
 /**
  *
  * @author 5399
@@ -16,6 +18,9 @@ public class Aitbank {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        SavingsAccount savingsAccount = new SavingsAccount();
+        
     }
     
 }
