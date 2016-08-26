@@ -35,7 +35,42 @@ public abstract class BankAccount {
         System.out.println("WithdrawDate......: " + withdrawDate);
 
     } 
+    
+    public void makeAccountWithdraw(double withdrawAmount)
+    {
+        if (withdrawAmount <= 0)
+        {
+            //TODO error - invalid withdraw value
+        }
+        else if (withdrawAmount > balance)
+        {
+            //TODO error - insufficient funds
+        } 
+        else
+        {
+            setBalance(balance - withdrawAmount); 
+            showBalance();
+        }
+    
+    }
 
+        public void makeAccountDeposit(double depositAmount)
+    {
+        if (depositAmount <= 0)
+        {
+            //TODO error - invalid withdraw value
+        }
+         else
+        {
+            setBalance(balance + depositAmount); 
+            setDepositDate(new DateTime());
+            showBalance();
+        }
+    
+    }
+
+    
+    
     public int getBranchNumber() {
         return branchNumber;
     }

@@ -23,12 +23,17 @@ public class DateTimeHelper {
         return dateTime;
     }
     
+ /**   public DateTime getCurrentDateTime()
+    {
+        
+    }*/
+    
     public int calculateDaysBetweenDates(DateTime initialDate, DateTime finalDate){
         int daysBetween = Days.daysBetween(initialDate, finalDate).getDays();
         return daysBetween;
     }
 
-        public int calculateMonthsBetweenDates(DateTime initialDate, DateTime finalDate){
+    public int calculateMonthsBetweenDates(DateTime initialDate, DateTime finalDate){
         int daysBetween = Months.monthsBetween(initialDate, finalDate).getMonths();
         return daysBetween;
     }

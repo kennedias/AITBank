@@ -18,33 +18,25 @@ import org.joda.time.DateTime;
 public class SavingsAccount extends BankAccount implements AccountInterestCalc{
 
     private double interestRate;
-    private double accountInterestAmount;
     
     @Override
     public void showAccountDetails() {
         System.out.println("Savings Account Details");
-        System.out.println("Branch Number           : " + branchNumber);
-        System.out.println("AccountNumber           : " + accountNumber);
-        System.out.println("Balance                 : " + balance);
-        System.out.println("Deposit Date            : " + depositDate);
-        System.out.println("Account Interest Amount : " + accountInterestAmount);
+        System.out.println("Branch Number....................: " + branchNumber);
+        System.out.println("AccountNumber....................: " + accountNumber);
+        System.out.println("Balance..........................: " + balance);
+        System.out.println("Deposit Date.....................: " + depositDate);
     }
 
     @Override
-    public double calculateAccountInterest() {
+    public void updateActualBalanceWithInterest() {
         
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
-        
-        try {
-            DateTime currentTime = dateTimeHelper.generateDateFromString("27/08/2016 24:00");
-            int daysOfDeposit = dateTimeHelper.calculateDaysBetweenDates(depositDate, currentTime);
-            accountInterestAmount = balance * Math.pow(1 + interestRate, daysOfDeposit);
 
-        } catch (ParseException ex) {
-            Logger.getLogger(SavingsAccount.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return accountInterestAmount;
+      //  DateTime currentTime = dateTimeHelper.generateDateFromString(new DateTime());
+        int daysOfDeposit = dateTimeHelper.calculateDaysBetweenDates(depositDate, new DateTime());
+        balance = balance * (Math.pow(1 + interestRate,(double) daysOfDeposit));
+     
     }
 
     public double getInterestRate() {
@@ -55,14 +47,5 @@ public class SavingsAccount extends BankAccount implements AccountInterestCalc{
     public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
     }
-
-    public double getAccountInterestAmount() {
-        return accountInterestAmount;
-    }
-
-    public void setAccountInterestAmount(double accountInterestAmount) {
-        this.accountInterestAmount = accountInterestAmount;
-    }
-    
     
 }
