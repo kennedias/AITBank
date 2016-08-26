@@ -5,21 +5,10 @@
  */
 package com.aitbank;
 
-import com.aitbank.constants.ConstantsAitBank;
 import com.aitbank.helper.DateTimeHelper;
 import com.aitbank.model.Customer;
 import com.aitbank.model.SavingsAccount;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Hours;
-import org.joda.time.Minutes;
-import org.joda.time.Months;
-import org.joda.time.Weeks;
-import org.joda.time.Years;
 
 /**
  *
@@ -32,7 +21,7 @@ public class Aitbank {
      */
    public static void main(String[] args) {
 
-String dateStart = "01/08/2016 00:00";
+String dateStart = "24/08/2016 00:00";
 String dateStop = "10/08/2016 24:00";
 
 try {
@@ -54,11 +43,20 @@ try {
     savings.setBranchNumber(99);
     savings.setBalance(100.00);
     savings.setDepositDate(dt1);
-    savings.setInterestRate(1.00);
-       
-    double value = savings.calculateAccountInterest();
-    System.out.println(" Interest Amount : " + String.valueOf(value) );
+    savings.setInterestRate(0.10);
+    savings.showAccountDetails();
     
+    System.out.println("\n");
+    System.out.println("Updating balance with account interest of the period... ");
+    
+    savings.updateActualBalanceWithInterest();
+    savings.showAccountDetails();
+    
+    System.out.println("\n");
+    
+    System.out.println("Making a deposit and updating with account interest of the period... ");
+    savings.makeAccountDeposit(100.0);
+    savings.updateActualBalanceWithInterest();
     savings.showAccountDetails();
     
  } catch (Exception e) {
