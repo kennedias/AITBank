@@ -37,6 +37,8 @@ try {
     customer.setCustomerID(1);
     customer.setName("Bob");
     
+    System.out.println("Creating Savings Account... ");
+    
     SavingsAccount savings = new SavingsAccount();
     savings.setCustomer(customer);
     savings.setAccountNumber(123);
@@ -58,6 +60,8 @@ try {
     savings.makeAccountDeposit(100.0);
     savings.updateActualBalanceWithInterest();
     savings.showAccountDetails();
+    
+     System.out.println("\n");
     
  } catch (Exception e) {
     e.printStackTrace();
