@@ -5,6 +5,8 @@
  */
 package com.aitbank.model;
 
+import org.joda.time.DateTime;
+
 /**
  *
  * @author 5399
@@ -12,9 +14,10 @@ package com.aitbank.model;
 public abstract class BankAccount {
     protected int branchNumber;
     protected int accountNumber;
-    protected int customerID;
+    protected Customer customer;
     protected double balance;
-    protected int withdrawalLimit;
+    protected DateTime depositDate;
+    protected DateTime withdrawDate;
 
   
     public void showBalance() {
@@ -25,10 +28,61 @@ public abstract class BankAccount {
         System.out.println("Savings Account Details");
         System.out.println("Branch Number.....: " + branchNumber);
         System.out.println("AccountNumber.....: " + accountNumber);
-        System.out.println("Customer ID.......: " + customerID);
+        System.out.println("Customer ID.......: " + customer.getCustomerID());
+        System.out.println("Customer Name.....: " + customer.getName());
         System.out.println("Balance...........: " + balance);
-        System.out.println("Withdrawal Limit..: " + withdrawalLimit);
+        System.out.println("Deposit Date......: " + depositDate);
+        System.out.println("WithdrawDate......: " + withdrawDate);
+
     } 
+
+    public int getBranchNumber() {
+        return branchNumber;
+    }
+
+    public void setBranchNumber(int branchNumber) {
+        this.branchNumber = branchNumber;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public DateTime getDepositDate() {
+        return depositDate;
+    }
+
+    public void setDepositDate(DateTime depositDate) {
+        this.depositDate = depositDate;
+    }
+
+    public DateTime getWithdrawDate() {
+        return withdrawDate;
+    }
+
+    public void setWithdrawDate(DateTime withdrawDate) {
+        this.withdrawDate = withdrawDate;
+    }
     
     
     

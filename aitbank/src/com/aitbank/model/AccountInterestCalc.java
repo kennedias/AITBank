@@ -11,6 +11,7 @@ package com.aitbank.model;
  */
 public interface AccountInterestCalc {
     
-     public double calculateAccountInterest();
+    public void setInterestRate(double interestRate);
+    public double calculateAccountInterest();
     
 }
