@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aitbank.controller;
+package com.aitbank.model;
+
+import com.aitbank.constants.ConstantsAitBank;
 
 /**
  *
- * @author 5399
+ * @author Kennedy
  */
-public class AccountControler {
+public class ChequeAccount extends BankAccount{
+    
     
 }

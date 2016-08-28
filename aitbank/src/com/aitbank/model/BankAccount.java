@@ -5,6 +5,7 @@
  */
 package com.aitbank.model;
 
+import com.aitbank.helper.DateTimeHelper;
 import org.joda.time.DateTime;
 
 /**
@@ -12,6 +13,7 @@ import org.joda.time.DateTime;
  * @author 5399
  */
 public abstract class BankAccount {
+
     protected int branchNumber;
     protected int accountNumber;
     protected Customer customer;
@@ -19,58 +21,58 @@ public abstract class BankAccount {
     protected DateTime depositDate;
     protected DateTime withdrawDate;
 
-  
     public void showBalance() {
         System.out.println("Account balance...: " + balance);
     }
 
     public void showAccountDetails() {
-        System.out.println("Savings Account Details");
+        DateTimeHelper dateTimeHelper = new DateTimeHelper();
+        
+        System.out.println("\nAccount Details"); 
         System.out.println("Branch Number.....: " + branchNumber);
         System.out.println("AccountNumber.....: " + accountNumber);
         System.out.println("Customer ID.......: " + customer.getCustomerID());
         System.out.println("Customer Name.....: " + customer.getName());
         System.out.println("Balance...........: " + balance);
-        System.out.println("Deposit Date......: " + depositDate);
-        System.out.println("WithdrawDate......: " + withdrawDate);
-
-    } 
-    
-    public void makeAccountWithdraw(double withdrawAmount)
-    {
-        if (withdrawAmount <= 0)
-        {
-            //TODO error - invalid withdraw value
+        if (depositDate != null){
+            System.out.println("Deposit Date......: " + dateTimeHelper.getDatetimeToString(depositDate));
+        } else {
+            System.out.println("Deposit Date......: No deposit");
         }
-        else if (withdrawAmount > balance)
-        {
+
+        if (withdrawDate != null){
+            System.out.println("Withdraw Date.....: " + dateTimeHelper.getDatetimeToString(withdrawDate));
+        } else {
+            System.out.println("Withdraw Date.....: No withdraw");
+        }
+    }
+
+    public void makeAccountWithdraw(double withdrawAmount) {
+        if (withdrawAmount <= 0) {
+            System.out.println("This transaction can not be completed. Withdraw amount invalid.");
+        } else if (withdrawAmount > balance) {
             //TODO error - insufficient funds
-        } 
-        else
-        {
-            setBalance(balance - withdrawAmount); 
-            showBalance();
+            System.out.println("This transaction can not be completed. Insufficient funds.");
+        } else {
+            setBalance(balance - withdrawAmount);
+            setWithdrawDate(new DateTime());
+            
         }
-    
+
     }
 
-        public void makeAccountDeposit(double depositAmount)
-    {
-        if (depositAmount <= 0)
-        {
+    public void makeAccountDeposit(double depositAmount) {
+        if (depositAmount <= 0) {
             //TODO error - invalid withdraw value
-        }
-         else
-        {
-            setBalance(balance + depositAmount); 
+            System.out.println("This transaction can not be completed. Deposit amount invalid.");
+        } else {
+            setBalance(balance + depositAmount);
             setDepositDate(new DateTime());
-            showBalance();
+            
         }
-    
+
     }
 
-    
-    
     public int getBranchNumber() {
         return branchNumber;
     }
@@ -118,7 +120,5 @@ public abstract class BankAccount {
     public void setWithdrawDate(DateTime withdrawDate) {
         this.withdrawDate = withdrawDate;
     }
-    
-    
-    
+
 }

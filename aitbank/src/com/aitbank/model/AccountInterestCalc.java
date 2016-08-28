@@ -11,7 +11,6 @@ package com.aitbank.model;
  */
 public interface AccountInterestCalc {
     
-    public void setInterestRate(double interestRate);
     public void updateActualBalanceWithInterest();
    
 }

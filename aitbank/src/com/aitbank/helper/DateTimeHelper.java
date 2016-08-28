@@ -23,20 +23,36 @@ public class DateTimeHelper {
         return dateTime;
     }
     
- /**   public DateTime getCurrentDateTime()
+    public DateTime getActualDateAndTime()
     {
-        
-    }*/
+        return new DateTime();
+    }
     
-    public int calculateDaysBetweenDates(DateTime initialDate, DateTime finalDate){
-        int daysBetween = Days.daysBetween(initialDate, finalDate).getDays();
+   public double calculateDaysBetweenDates(DateTime initialDate, DateTime finalDate){
+        double daysBetween = Days.daysBetween(initialDate, finalDate).getDays();
         return daysBetween;
     }
 
-    public int calculateMonthsBetweenDates(DateTime initialDate, DateTime finalDate){
-        int daysBetween = Months.monthsBetween(initialDate, finalDate).getMonths();
+    public double calculateMonthsBetweenDates(DateTime initialDate, DateTime finalDate){
+        double daysBetween = Months.monthsBetween(initialDate, finalDate).getMonths();
         return daysBetween;
     }
 
-
+    public String getDatetimeToString(DateTime dateTime){
+        return dateTime.toString(ConstantsAitBank.DATE_FORMAT_PATTERN);
+        
+    }
+    
+    public boolean verifyDatetimeIsToday(DateTime dateTime){
+        
+        DateTime actualDateTime = getActualDateAndTime();
+        double daysBetween = Days.daysBetween(actualDateTime, dateTime).getDays();
+        
+        if (daysBetween == 0 ){
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
 }
