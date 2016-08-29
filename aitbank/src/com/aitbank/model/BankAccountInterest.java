@@ -25,7 +25,7 @@ public abstract class BankAccountInterest extends BankAccount {
         System.out.println("Customer ID.......: " + customer.getCustomerID());
         System.out.println("Customer Name.....: " + customer.getName());
         System.out.println("Balance...........: " + balance);
-        System.out.println("Interest Rate.....: " + interestRate);
+        System.out.println("Interest Rate.....: " + interestRate); // print the attribute from this class
         if (depositDate != null){
             System.out.println("Deposit Date......: " + dateTimeHelper.getDatetimeToString(depositDate));
         } else {

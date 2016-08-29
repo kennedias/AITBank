@@ -53,10 +53,11 @@ public abstract class BankAccount {
     
     /**
      * Make a account withdraw.
-     * @param withdrawAmount
+     * @param withdrawAmount double
      * @throws IllegalBankAccountOperationException
      */
-    public void makeAccountWithdraw(double withdrawAmount) throws IllegalBankAccountOperationException {
+    public void makeAccountWithdraw(double withdrawAmount) 
+            throws IllegalBankAccountOperationException {
         if (withdrawAmount <= 0) {
             throw new IllegalArgumentException("Invalid withdraw amount.");
         } else if (withdrawAmount > balance) {
@@ -69,10 +70,11 @@ public abstract class BankAccount {
 
     /**
      * Make a account deposit.
-     * @param depositAmount
+     * @param depositAmount double
      * @throws IllegalBankAccountOperationException
      */
-    public void makeAccountDeposit(double depositAmount) throws IllegalBankAccountOperationException {
+    public void makeAccountDeposit(double depositAmount) 
+            throws IllegalBankAccountOperationException {
         if (depositAmount <= 0) {
             throw new IllegalArgumentException("Invalid deposit amount.");
         } else {
@@ -83,7 +85,7 @@ public abstract class BankAccount {
 
     /**
      * Get the branchNumber attribute.
-     * @return branchNumber
+     * @return branchNumber int
      */
     public int getBranchNumber() {
         return branchNumber;
@@ -91,7 +93,7 @@ public abstract class BankAccount {
 
     /**
      * Set the branchNumber attribute.
-     * @param branchNumber
+     * @param branchNumber int
      */
     public void setBranchNumber(int branchNumber) {
         this.branchNumber = branchNumber;
@@ -99,7 +101,7 @@ public abstract class BankAccount {
 
     /**
      * Get the accountNumber attribute.
-     * @return accountNumber
+     * @return accountNumber int 
      */    
     public int getAccountNumber() {
         return accountNumber;
@@ -107,7 +109,7 @@ public abstract class BankAccount {
     
     /**
      * Set the accountNumber attribute.
-     * @param accountNumber
+     * @param accountNumber int
      */
     public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
@@ -115,7 +117,7 @@ public abstract class BankAccount {
 
     /**
      * Get the customer attribute.
-     * @return Customer
+     * @return customer Customer
      */ 
     public Customer getCustomer() {
         return customer;
@@ -123,7 +125,7 @@ public abstract class BankAccount {
 
     /**
      * Set the customer attribute.
-     * @param customer
+     * @param customer Customer
      */
     public void setCustomer(Customer customer) {
         this.customer = customer;
@@ -131,7 +133,7 @@ public abstract class BankAccount {
 
     /**
      * Get the balance attribute.
-     * @return balance
+     * @return balance double
      */
     public double getBalance() {
         return balance;
@@ -139,7 +141,7 @@ public abstract class BankAccount {
 
     /**
      * Set the balance attribute.
-     * @param balance
+     * @param balance double
      */ 
     public void setBalance(double balance) {
         this.balance = balance;
@@ -147,7 +149,7 @@ public abstract class BankAccount {
     
     /**
      * Get the depositDate attribute.
-     * @return depositDate
+     * @return depositDate DateTime
      */
     public DateTime getDepositDate() {
         return depositDate;
@@ -155,7 +157,7 @@ public abstract class BankAccount {
 
     /**
      * Set the depositDate attribute.
-     * @param depositDate
+     * @param depositDate DateTime
      */     
     public void setDepositDate(DateTime depositDate) {
         this.depositDate = depositDate;
@@ -163,7 +165,7 @@ public abstract class BankAccount {
 
     /**
      * Get the withdrawDate attribute.
-     * @return withdrawDate
+     * @return withdrawDate DateTime
      */
     public DateTime getWithdrawDate() {
         return withdrawDate;
@@ -171,7 +173,7 @@ public abstract class BankAccount {
 
     /**
      * Set the withdrawDate attribute.
-     * @param withdrawDate
+     * @param withdrawDate DateTime
      */ 
     public void setWithdrawDate(DateTime withdrawDate) {
         this.withdrawDate = withdrawDate;

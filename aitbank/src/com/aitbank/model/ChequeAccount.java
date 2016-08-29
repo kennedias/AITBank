@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aitbank.model;
 
-import com.aitbank.constants.ConstantsAitBank;
-
 /**
+ * This class represents the Cheque Account.
+ * It contains also the related methods to manipulate the account.
+ * Cheque account does not have specific attributes or methods, so the
+ * attributes and methods from super() are enough to manipulate this account.
  *
- * @author Kennedy
+ * @author 5399 - Kennedy Oliveira
  */
 public class ChequeAccount extends BankAccount{
     

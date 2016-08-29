@@ -29,40 +29,64 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
         System.out.println("Balance...........: " + balance);
         System.out.println("Interest Rate.....: " + interestRate);
         if (depositDate != null){
-            System.out.println("Deposit Date......: " + dateTimeHelper.getDatetimeToString(depositDate));
+            System.out.println("Deposit Date......: " 
+                    + dateTimeHelper.getDatetimeToString(depositDate));
         } else {
             System.out.println("Deposit Date......: No deposit");
         }
 
         if (withdrawDate != null){
-            System.out.println("Withdraw Date.....: " + dateTimeHelper.getDatetimeToString(withdrawDate));
+            System.out.println("Withdraw Date.....: " 
+                    + dateTimeHelper.getDatetimeToString(withdrawDate));
         } else {
             System.out.println("Withdraw Date.....: No withdraw");
         }
-        System.out.println("Daily Withdraw Limit...........  : " + dailyWithdrawLimit);
-        System.out.println("Daily Withdraw Limit Realised....: " + dailyWithdrawAmountRealized);
+        System.out.println("Daily Withdraw Limit...........  : " 
+                + dailyWithdrawLimit);
+        System.out.println("Daily Withdraw Limit Realised....: " 
+                + dailyWithdrawAmountRealized);
     }
 
     /**
      * Calculate the interest amount on the period and update the balance.
+     * @throws com.aitbank.exception.IllegalBankAccountOperationException
      */
     @Override
-    public void updateActualBalanceWithInterest() {
+    public void updateActualBalanceWithInterest() 
+            throws IllegalBankAccountOperationException {
 
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
 
-        double daysOfDeposit = dateTimeHelper.calculateDaysBetweenDates(depositDate, dateTimeHelper.getActualDateAndTime());
-        setBalance(balance * (Math.pow(1 + interestRate, daysOfDeposit)));
-
+        if (balance <= 0){
+            throw new IllegalArgumentException("This account do not have a valid "
+                    + "balance date to calculate and pay interest.");
+        }
+        
+        if (depositDate == null){
+            throw new IllegalArgumentException("This account do not have a valid "
+                    + "deposit date to calculate and pay interest.");
+        }
+        
+        // If the account do not have an positive and greater than zero
+        // interest value it is not to calculate and pay interest.
+        if (interestRate > 0){
+            double daysOfDeposit = dateTimeHelper.calculateDaysBetweenDates(depositDate, 
+                    dateTimeHelper.getActualDateAndTime());
+            setBalance(balance * (Math.pow(1 + interestRate, daysOfDeposit)));
+        } else {
+            throw new IllegalArgumentException("The interest rate for this account"
+                    + " is not valid do calculate and pay interest.");
+        }
     }
 
     /**
      * Make a account withdraw.
-     * @param withdrawAmount
+     * @param withdrawAmount the withdraw amount
      * @throws com.aitbank.exception.IllegalBankAccountOperationException
      */
     @Override
-    public void makeAccountWithdraw(double withdrawAmount) throws IllegalBankAccountOperationException {
+    public void makeAccountWithdraw(double withdrawAmount) 
+            throws IllegalBankAccountOperationException {
               
         if (withdrawAmountLimitVerify(withdrawAmount)){
             setBalance(balance - withdrawAmount);
@@ -73,22 +97,27 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
     }
     
     /**
-     * Verify if its possible to perform a  withdraw based on the withdraw account rules.
-     * @param withdrawAmount
-     * @return boolean
+     * Verify if its possible to perform a withdraw based on the withdraw 
+     * account rules.
+     * @param withdrawAmount the withdraw amount
+     * @return boolean says if the withdraw can be performed
      * @throws com.aitbank.exception.IllegalBankAccountOperationException
      */
-    public boolean withdrawAmountLimitVerify(double withdrawAmount) throws IllegalBankAccountOperationException{
+    public boolean withdrawAmountLimitVerify(double withdrawAmount) 
+            throws IllegalBankAccountOperationException{
 
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
         
         if (withdrawAmount <= 0) {
             throw new IllegalArgumentException("Withdraw amount invalid.");
         } else if (withdrawAmount > dailyWithdrawLimit){
-            throw new IllegalBankAccountOperationException("Withdraw exceeds the daily withdraw limit.");
-        } else if (withdrawDate != null && dateTimeHelper.verifyIfDateTimeIsToday(withdrawDate)){
+            throw new IllegalBankAccountOperationException("Withdraw exceeds "
+                    + "the daily withdraw limit.");
+        } else if (withdrawDate != null && 
+                dateTimeHelper.verifyIfDateTimeIsToday(withdrawDate)){
             if ((dailyWithdrawAmountRealized + withdrawAmount) > dailyWithdrawLimit) {
-                throw new IllegalBankAccountOperationException("Withdraw exceeds the daily withdraw limit.");
+                throw new IllegalBankAccountOperationException("Withdraw exceeds"
+                        + " the daily withdraw limit.");
             }
         } 
         if (withdrawAmount > balance) {
@@ -101,7 +130,7 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
 
     /**
      * Get the dailyWithdrawLimit attribute.
-     * @return dailyWithdrawLimit
+     * @return dailyWithdrawLimit the withdraw amount limit
      */
     public double getDailyWithdrawLimit() {
         return dailyWithdrawLimit;
@@ -109,7 +138,7 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
 
     /**
      * Set the dailyWithdrawLimit attribute.
-     * @param dailyWithdrawLimit
+     * @param dailyWithdrawLimit the withdraw amount limit
      */
     public void setDailyWithdrawLimit(double dailyWithdrawLimit) {
         this.dailyWithdrawLimit = dailyWithdrawLimit;
@@ -117,7 +146,7 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
 
     /**
      * Get the dailyWithdrawAmountRealized attribute.
-     * @return dailyWithdrawLimit
+     * @return dailyWithdrawLimit the withdraw amount realized
      */
     public double getDailyWithdrawAmountRealized() {
         return dailyWithdrawAmountRealized;
@@ -127,7 +156,7 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
      * Set the dailyWithdrawAmountRealized attribute.
      * For security this is a private method, this attribute have to be updated 
      * only when a withdraw is realized.
-     * @param dailyWithdrawAmountRealized
+     * @param dailyWithdrawAmountRealized the withdraw amount realized
      */
     private void setDailyWithdrawAmountRealized(double dailyWithdrawAmountRealized) {
         this.dailyWithdrawAmountRealized = dailyWithdrawAmountRealized;

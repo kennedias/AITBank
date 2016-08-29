@@ -12,7 +12,8 @@ import org.joda.time.Months;
  * Also gives any transparency of what component is used for deal with dates
  * and in this case should generate less reworking if a component change is 
  * necessary to be done.
- * @author Kennedy
+ * 
+ * @author 5399 - Kennedy Oliveira
  */
 public class DateTimeHelper {
     
@@ -23,7 +24,8 @@ public class DateTimeHelper {
      * @throws ParseException
      */
     public DateTime generateDateFromString(String dateString) throws ParseException{
-        DateTime dateTime = new DateTime(ConstantsAitBank.SIMPLE_DATE_FORMAT_PATTERN.parse(dateString));
+        DateTime dateTime = 
+                new DateTime(ConstantsAitBank.SIMPLE_DATE_FORMAT_PATTERN.parse(dateString));
         return dateTime;
     }
     
@@ -76,7 +78,7 @@ public class DateTimeHelper {
     public boolean verifyIfDateTimeIsToday(DateTime dateTime){
         boolean isToday = false;
         DateTime actualDateTime = getActualDateAndTime();
-        double daysBetween = calculateDaysBetweenDates(actualDateTime,dateTime );
+        double daysBetween = calculateDaysBetweenDates(actualDateTime, dateTime);
         
         if (daysBetween == 0 ){
             isToday = true;
