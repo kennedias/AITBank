@@ -1,23 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aitbank.model;
 
-import com.aitbank.constants.ConstantsAitBank;
+import com.aitbank.exception.IllegalBankAccountOperationException;
 import org.joda.time.DateTime;
 import com.aitbank.helper.DateTimeHelper;
 
 /**
+ * This class represents the Fixed Account.
+ * It contains also the related methods to manipulate the account.
  *
- * @author Kennedy
+ * @author 5399 - Kennedy Oliveira
  */
 public class FixedAccount extends BankAccountInterest implements AccountInterestCalc{
 
     private DateTime dueDateOfInterest;
     private boolean interestAlreadyPayed = false;
    
+    /**
+     * Print the Fixed Account details.
+     */
     @Override
     public void showAccountDetails() {
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
@@ -54,49 +54,59 @@ public class FixedAccount extends BankAccountInterest implements AccountInterest
         }
         
     }
-    
+
+    /**
+     * Calculate the interest amount on the period and update the balance.
+     * @throws com.aitbank.exception.IllegalBankAccountOperationException
+     */    
     @Override
-    public void updateActualBalanceWithInterest() {
+    public void updateActualBalanceWithInterest() throws IllegalBankAccountOperationException{
 
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
+    
+        if (dueDateOfInterest == null){
+            throw new IllegalArgumentException("This account do not have a valid due date to pay interest.");
+        }
 
         if(interestAlreadyPayed){
-            System.out.println("This account have already payed interest.");
-            return;
-        }
-        
-        if (dueDateOfInterest == null){
-            System.out.println("This account do not have a valid due date to pay interest.");
-            return;
+            throw new IllegalArgumentException("This account have already payed interest.");
         }
         
         if (withdrawDate != null){
             if ((dueDateOfInterest.isBefore(dateTimeHelper.getActualDateAndTime())) &&
                 (dueDateOfInterest.isBefore(withdrawDate))){
-                System.out.println("Due Date and time is before of the last withdraw and now");
-                this.applyInterestOnBalance();
+                applyInterestOnBalance();
             }
         } else if((dateTimeHelper.getActualDateAndTime().isAfter(dueDateOfInterest))){
-            System.out.println("Date and time of the last withdraw and now is after due date");
-            this.applyInterestOnBalance();
+            applyInterestOnBalance();
         } else {
-            System.out.println("The requirements for apply interest on this account have not been achieved.");
+            throw new IllegalArgumentException("The requirements for apply interest on this account have not been achieved.");
         }
-
     }
     
-    private void applyInterestOnBalance(){
-        balance = balance * (1 + interestRate);
+    /**
+     * Update the balance and set interestAlreadyPayed flag to true.
+     * For security this is a private method, this attribute have to be updated 
+     * only when the interest rule is achieved.
+     */ 
+    private void applyInterestOnBalance() {
+        setBalance(balance * (1 + interestRate));
         interestAlreadyPayed = true;
     }
 
+    /**
+     * Get the dueDateOfInterest attribute.
+     * @return dueDateOfInterest
+     */
     public DateTime getDueDateOfInterest() {
         return dueDateOfInterest;
     }
 
+    /**
+     * Set the dueDateOfInterest attribute.
+     * @param dueDateOfInterest
+     */
     public void setDueDateOfInterest(DateTime dueDateOfInterest) {
         this.dueDateOfInterest = dueDateOfInterest;
     }
-        
-    
 }

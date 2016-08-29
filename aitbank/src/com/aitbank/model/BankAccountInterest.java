@@ -1,20 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aitbank.model;
 
 import com.aitbank.helper.DateTimeHelper;
 
 /**
+ * This class represents the Super Class Bank Account Interest.
+ * It contains also the related methods to manipulate the account for accounts
+ * that pay interest. This class extends Bank Account.
  *
- * @author Kennedy
+ * @author 5399 - Kennedy Oliveira
  */
-public abstract class BankAccountInterest extends BankAccount{
+public abstract class BankAccountInterest extends BankAccount {
     
     protected double interestRate;
     
+    /**
+     * Print the Bank Account Interest details.
+     */ 
     @Override
     public void showAccountDetails() {
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
@@ -38,11 +39,18 @@ public abstract class BankAccountInterest extends BankAccount{
         }
     }
     
-
+    /**
+     * Get the interestRate attribute.
+     * @return interestRate
+     */
     public double getInterestRate() {
         return interestRate;
     }
 
+    /**
+     * Set the interestRate attribute.
+     * @param interestRate
+     */
     public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
     }

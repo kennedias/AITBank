@@ -1,25 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aitbank.model;
 
 import com.aitbank.helper.DateTimeHelper;
 import org.joda.time.DateTime;
 
 /**
+ * This class represents the Net-Saver Account.
+ * It contains also the related methods to manipulate the account.
  *
- * @author Kennedy
+ * @author 5399 - Kennedy Oliveira
  */
 public class NetSaverAccount extends BankAccountInterest implements AccountInterestCalc {
 
+    /**
+     * Calculate the interest amount on the period and update the balance.
+     */
     @Override
     public void updateActualBalanceWithInterest() {
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
         
         double monthsOfDeposit = dateTimeHelper.calculateMonthsBetweenDates(depositDate, new DateTime());
-        balance = balance * (Math.pow(1+interestRate, (double) monthsOfDeposit));
+        setBalance(balance * (Math.pow(1+interestRate, (double) monthsOfDeposit)));
     }
 
 }
