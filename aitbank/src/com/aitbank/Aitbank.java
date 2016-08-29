@@ -1,6 +1,5 @@
 package com.aitbank;
 
-import com.aitbank.helper.DateTimeHelper;
 import com.aitbank.model.Customer;
 import com.aitbank.view.ChequeAccountView;
 import com.aitbank.view.FixedAccountView;
@@ -22,25 +21,14 @@ public class Aitbank {
         customer.setCustomerID(1);
         customer.setName("Bob");
         
-        try {
-        DateTimeHelper dateHelper = new DateTimeHelper();
-        
-       if (dateHelper.verifyIfDateTimeIsToday(dateHelper.generateDateFromString("28/08/2016 23:00")))
-            System.out.println("Today");
-       else
-           System.out.println("NOT Today");
-        
-        } catch (Exception e){
-            
-        }
         ChequeAccountView chequeAccountView = new ChequeAccountView();
- //       chequeAccountView.ChequeAccountView(customer);
+//        chequeAccountView.ChequeAccountView(customer);
         
         SavingsAccountView savingsAccountView = new SavingsAccountView();
- //       savingsAccountView.SavingsAccountView(customer);
+//        savingsAccountView.SavingsAccountView(customer);
         
         NetSaverAccountView netSaverAccountView = new NetSaverAccountView();
- //       netSaverAccountView.NetSaverAccountView(customer);
+        netSaverAccountView.NetSaverAccountView(customer);
 
         FixedAccountView fixedAccountView = new FixedAccountView();
 //        fixedAccountView.FixedAccountView(customer);      

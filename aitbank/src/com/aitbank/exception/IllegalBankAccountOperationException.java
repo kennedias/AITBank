@@ -8,6 +8,6 @@ package com.aitbank.exception;
  */
 public class IllegalBankAccountOperationException extends Exception{
     public IllegalBankAccountOperationException(String message){
-        super("This transaction can not be completed. " + message);
+        super("IllegalBankAccountOperationException: " + message);
     }
 }

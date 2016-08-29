@@ -58,12 +58,12 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
 
         if (balance <= 0){
-            throw new IllegalArgumentException("This account do not have a valid "
+            throw new IllegalBankAccountOperationException("This account do not have a valid "
                     + "balance date to calculate and pay interest.");
         }
         
         if (depositDate == null){
-            throw new IllegalArgumentException("This account do not have a valid "
+            throw new IllegalBankAccountOperationException("This account do not have a valid "
                     + "deposit date to calculate and pay interest.");
         }
         
@@ -74,7 +74,7 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
                     dateTimeHelper.getActualDateAndTime());
             setBalance(balance * (Math.pow(1 + interestRate, daysOfDeposit)));
         } else {
-            throw new IllegalArgumentException("The interest rate for this account"
+            throw new IllegalBankAccountOperationException("The interest rate for this account"
                     + " is not valid do calculate and pay interest.");
         }
     }
@@ -109,7 +109,7 @@ public class SavingsAccount extends BankAccountInterest implements AccountIntere
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
         
         if (withdrawAmount <= 0) {
-            throw new IllegalArgumentException("Withdraw amount invalid.");
+            throw new IllegalBankAccountOperationException("Withdraw amount invalid.");
         } else if (withdrawAmount > dailyWithdrawLimit){
             throw new IllegalBankAccountOperationException("Withdraw exceeds "
                     + "the daily withdraw limit.");

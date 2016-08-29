@@ -59,9 +59,9 @@ public abstract class BankAccount {
     public void makeAccountWithdraw(double withdrawAmount) 
             throws IllegalBankAccountOperationException {
         if (withdrawAmount <= 0) {
-            throw new IllegalArgumentException("Invalid withdraw amount.");
+            throw new IllegalBankAccountOperationException("Invalid withdraw amount.");
         } else if (withdrawAmount > balance) {
-            throw new IllegalArgumentException("Insufficient funds.");
+            throw new IllegalBankAccountOperationException("Insufficient funds.");
         } else {
             setBalance(balance - withdrawAmount);
             setWithdrawDate(new DateTime());
@@ -76,7 +76,7 @@ public abstract class BankAccount {
     public void makeAccountDeposit(double depositAmount) 
             throws IllegalBankAccountOperationException {
         if (depositAmount <= 0) {
-            throw new IllegalArgumentException("Invalid deposit amount.");
+            throw new IllegalBankAccountOperationException("Invalid deposit amount.");
         } else {
             setBalance(balance + depositAmount);
             setDepositDate(new DateTime());

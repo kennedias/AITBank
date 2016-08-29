@@ -23,12 +23,12 @@ public class NetSaverAccount extends BankAccountInterest implements AccountInter
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
         
         if (balance <= 0){
-            throw new IllegalArgumentException("This account do not have a valid "
+            throw new IllegalBankAccountOperationException("This account do not have a valid "
                     + "balance date to calculate and pay interest.");
         }
         
         if (depositDate == null){
-            throw new IllegalArgumentException("This account do not have a valid "
+            throw new IllegalBankAccountOperationException("This account do not have a valid "
                     + "deposit date to calculate and pay interest.");
         }
         
@@ -40,7 +40,7 @@ public class NetSaverAccount extends BankAccountInterest implements AccountInter
             setBalance(balance * (Math.pow(1+interestRate, (double) monthsOfDeposit)));
             
         } else {
-            throw new IllegalArgumentException("The interest rate for this account"
+            throw new IllegalBankAccountOperationException("The interest rate for this account"
                     + " is not valid do calculate and pay interest.");
         }
     }

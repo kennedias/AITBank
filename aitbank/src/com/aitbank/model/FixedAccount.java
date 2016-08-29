@@ -13,6 +13,7 @@ import com.aitbank.helper.DateTimeHelper;
 public class FixedAccount extends BankAccountInterest implements AccountInterestCalc{
 
     private DateTime dueDateOfInterest;
+    private double fixedAmount;
     private boolean interestAlreadyPayed = false;
    
     /**
@@ -27,6 +28,7 @@ public class FixedAccount extends BankAccountInterest implements AccountInterest
         System.out.println("Customer ID.......: " + customer.getCustomerID());
         System.out.println("Customer Name.....: " + customer.getName());
         System.out.println("Balance...........: " + balance);
+        System.out.println("Fixed Amount......: " + fixedAmount);
         System.out.println("Interest rate.....: " + interestRate);
 
         if (interestAlreadyPayed){ // print the attribute from this class
@@ -68,24 +70,24 @@ public class FixedAccount extends BankAccountInterest implements AccountInterest
 
         DateTimeHelper dateTimeHelper = new DateTimeHelper();
 
-        if (balance <= 0){
-            throw new IllegalArgumentException("This account do not have a valid "
-                    + "balance date to calculate and pay interest.");
+        if (fixedAmount <= 0){
+            throw new IllegalBankAccountOperationException("This account do not have a valid "
+                    + "fixed amount to calculate and pay interest.");
         }
         
         if (interestRate <= 0){
-            throw new IllegalArgumentException("The interest rate for this account"
-                    + " is not valid do calculate and pay interest.");
+            throw new IllegalBankAccountOperationException("The interest rate for this account"
+                    + " is not valid to calculate and pay interest.");
         }
         
         if (dueDateOfInterest == null){
-            throw new IllegalArgumentException("This account do not have a valid "
-                    + "due date to pay interest.");
+            throw new IllegalBankAccountOperationException("This account do not have a valid "
+                    + "due date to calculate and pay interest.");
         }
         
         // If the account have already payed the interest it can not pay again.
         if(interestAlreadyPayed){ 
-            throw new IllegalArgumentException("This account have already payed interest.");
+            throw new IllegalBankAccountOperationException("This account have already payed interest.");
         }
 
         // Verify if the account have any withdraw done.
@@ -96,13 +98,14 @@ public class FixedAccount extends BankAccountInterest implements AccountInterest
             if ((dueDateOfInterest.isBefore(dateTimeHelper.getActualDateAndTime())) && 
                 (dueDateOfInterest.isBefore(withdrawDate))){
                 applyInterestOnBalance();
-            } //And this one uses the "isAfter" function to show how it works.
+            } else {
+                throw new IllegalBankAccountOperationException("The requirements for apply "
+                    + "interest on this account have not been achieved.");
+            }
+                   //And this one uses the "isAfter" function to show how it works.
         } else if((dateTimeHelper.getActualDateAndTime().isAfter(dueDateOfInterest))){
             applyInterestOnBalance();
-        } else {
-            throw new IllegalArgumentException("The requirements for apply "
-                    + "interest on this account have not been achieved.");
-        }
+        } 
     }
     
     /**
@@ -111,8 +114,15 @@ public class FixedAccount extends BankAccountInterest implements AccountInterest
      * only when the interest rule is achieved.
      */ 
     private void applyInterestOnBalance() {
-        // update the account with the interest rate.
-        setBalance(balance * (1 + interestRate));
+        /** 
+         * The calc is based in a fixed value of the initial deposit.
+         * If a withdraw is done after the due date and before the system
+         * update the account interest, the value considered for the calc
+         * would be the correct one: the total amount contracted, before
+         * any pos due date withdraw.
+         * */
+        double amountInterest = fixedAmount * interestRate;
+        setBalance(balance + amountInterest);
         interestAlreadyPayed = true;
     }
 
@@ -131,4 +141,23 @@ public class FixedAccount extends BankAccountInterest implements AccountInterest
     public void setDueDateOfInterest(DateTime dueDateOfInterest) {
         this.dueDateOfInterest = dueDateOfInterest;
     }
+
+    /**
+     * Get the fixedAmount attribute.
+     * @return fixedAmount
+     */
+    public double getFixedAmount() {
+        return fixedAmount;
+    }
+
+    /**
+     * Set the fixedAmount attribute.
+     * @param fixedAmount
+     */
+    public void setFixedAmount(double fixedAmount) {
+        this.fixedAmount = fixedAmount;
+    }
+    
+    
+    
 }
