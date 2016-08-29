@@ -21,23 +21,25 @@ public class Aitbank {
         customer.setCustomerID(1);
         customer.setName("Bob");
         
+        System.out.println("\n------------------------- Cheque Account ----------"
+                + "------------------------------");
         ChequeAccountView chequeAccountView = new ChequeAccountView();
-//        chequeAccountView.ChequeAccountView(customer);
-        
+        chequeAccountView.ChequeAccountView(customer);
+
+        System.out.println("\n------------------------- Savings Account ---------"
+                + "-------------------------------");        
         SavingsAccountView savingsAccountView = new SavingsAccountView();
-//        savingsAccountView.SavingsAccountView(customer);
+        savingsAccountView.SavingsAccountView(customer);
         
+        System.out.println("\n------------------------- Net-Saver Account --------"
+                + "--------------------------------");
         NetSaverAccountView netSaverAccountView = new NetSaverAccountView();
         netSaverAccountView.NetSaverAccountView(customer);
 
+        System.out.println("\n------------------------- Fixed Account --------"
+                + "--------------------------------");
         FixedAccountView fixedAccountView = new FixedAccountView();
-//        fixedAccountView.FixedAccountView(customer);      
-
-
-                
-
-
-
+        fixedAccountView.FixedAccountView(customer);      
 
     }
 
