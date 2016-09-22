@@ -41,9 +41,9 @@ public class AtmUI {
         setupPanels();
         
         //infoPanel.setText("dsfsdf\nsdfsdfdsf\ndsfdsfgdfgdgdgdgdgdgdgdgdgghjghjghjghjghjghjghjdgdgdg");
-        infoPanel.i
-        infoPanel.setText(textAccount);
-        infoPanel.setLineWrap(true);
+     //   infoPanel.i
+     //   infoPanel.setText(textAccount);
+     //   infoPanel.setLineWrap(true);
         
         frame.setVisible(true);
         
