@@ -1,6 +1,7 @@
 package com.aitbank;
 
 import com.aitbank.model.Customer;
+import com.aitbank.view.AtmUI;
 import com.aitbank.view.ChequeAccountView;
 import com.aitbank.view.FixedAccountView;
 import com.aitbank.view.NetSaverAccountView;
@@ -17,6 +18,10 @@ public class Aitbank {
      */
     public static void main(String[] args) {
         
+        AtmUI atm = new AtmUI();
+        atm.setupUI();
+        
+        /*
         Customer customer = new Customer();
         customer.setCustomerID(1);
         customer.setName("Bob");
@@ -40,7 +45,7 @@ public class Aitbank {
                 + "--------------------------------");
         FixedAccountView fixedAccountView = new FixedAccountView();
         fixedAccountView.FixedAccountView(customer);      
-
+*/
     }
 
 }
