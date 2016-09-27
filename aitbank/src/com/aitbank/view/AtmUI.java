@@ -24,13 +24,16 @@ public class AtmUI {
     JButton btnCancel, btnConfirm, btnWithdraw, btnBalance, btnDeposit, btnHelp;
     JButton btnSavings, btnNet, btnFixed, btnCheque;
     
-    JPanel bottomPanel, bottomLeftPanel, bottomMiddlePanel, bottomRightPanel;
-    JPanel topPanel, topLeftPanel, topMiddlePanel, topRightPanel;
+    JPanel bottomPanel, bottomLeftPanel, numberPadPanel, bottomRightPanel;
+    JPanel topPanel, accountPanel, textScreenPanel, accountOperationPanel;
 
     String line="";
     String textAccount = "Select an account: ";
     String textAccountOperation="Select an operation: ";
     String numbers = "";
+    String accountType = "";
+    String accountOperation = "";
+    String amountOperation ="";
     int stage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
     
     public void setupUI(){
@@ -40,59 +43,51 @@ public class AtmUI {
         setupButtons();
         setupPanels();
         
-        //infoPanel.setText("dsfsdf\nsdfsdfdsf\ndsfdsfgdfgdgdgdgdgdgdgdgdgghjghjghjghjghjghjghjdgdgdg");
-     //   infoPanel.i
-     //   infoPanel.setText(textAccount);
-     //   infoPanel.setLineWrap(true);
-        
-        frame.setVisible(true);
-        
+        frame.setVisible(true);        
     }
-
         private void setupPanels(){
-            topLeftPanel = new JPanel(new GridLayout(4,1));
-            topLeftPanel.add(btnSavings);
-            topLeftPanel.add(btnNet);
-            topLeftPanel.add(btnFixed);
-            topLeftPanel.add(btnCheque);
+            accountPanel = new JPanel(new GridLayout(4,1));
+            accountPanel.add(btnSavings);
+            accountPanel.add(btnNet);
+            accountPanel.add(btnFixed);
+            accountPanel.add(btnCheque);
 
-            topMiddlePanel = new JPanel(new GridLayout(1,1));
+            textScreenPanel = new JPanel(new GridLayout(1,1));
             infoPanel = new JTextArea();
             infoPanel.setEditable(false);
-            topMiddlePanel.add(infoPanel);
+            textScreenPanel.add(infoPanel);
             
-            topRightPanel = new JPanel(new GridLayout(4,1));
-            topRightPanel.add(btnBalance);
-            topRightPanel.add(btnWithdraw);
-            topRightPanel.add(btnDeposit);
-            topRightPanel.add(btnHelp);
+            accountOperationPanel = new JPanel(new GridLayout(4,1));
+            accountOperationPanel.add(btnBalance);
+            accountOperationPanel.add(btnWithdraw);
+            accountOperationPanel.add(btnDeposit);
+            accountOperationPanel.add(btnHelp);
             
             topPanel = new JPanel(new GridLayout(1,3));
-            topPanel.add(topLeftPanel);
-            topPanel.add(topMiddlePanel);
-            topPanel.add(topRightPanel);
-
+            topPanel.add(accountPanel);
+            topPanel.add(textScreenPanel);
+            topPanel.add(accountOperationPanel);
             
-            bottomMiddlePanel = new JPanel(new GridLayout(4,3));
-            bottomMiddlePanel.add(btn1);
-            bottomMiddlePanel.add(btn2);
-            bottomMiddlePanel.add(btn3);
-            bottomMiddlePanel.add(btn4);
-            bottomMiddlePanel.add(btn5);
-            bottomMiddlePanel.add(btn6);            
-            bottomMiddlePanel.add(btn7);
-            bottomMiddlePanel.add(btn8);
-            bottomMiddlePanel.add(btn9);
-            bottomMiddlePanel.add(btnCancel);
-            bottomMiddlePanel.add(btn0);
-            bottomMiddlePanel.add(btnConfirm);
+            numberPadPanel = new JPanel(new GridLayout(4,3));
+            numberPadPanel.add(btn1);
+            numberPadPanel.add(btn2);
+            numberPadPanel.add(btn3);
+            numberPadPanel.add(btn4);
+            numberPadPanel.add(btn5);
+            numberPadPanel.add(btn6);            
+            numberPadPanel.add(btn7);
+            numberPadPanel.add(btn8);
+            numberPadPanel.add(btn9);
+            numberPadPanel.add(btnCancel);
+            numberPadPanel.add(btn0);
+            numberPadPanel.add(btnConfirm);
             
             bottomLeftPanel = new JPanel(new GridLayout(1,1));
             bottomRightPanel = new JPanel(new GridLayout(1,1));
             
             bottomPanel = new JPanel(new GridLayout(1,1));
             bottomPanel.add(bottomLeftPanel);
-            bottomPanel.add(bottomMiddlePanel);
+            bottomPanel.add(numberPadPanel);
             bottomPanel.add(bottomRightPanel);
             
             frame.add(topPanel, BorderLayout.NORTH);  
@@ -154,8 +149,11 @@ public class AtmUI {
    }
     
     public void updateGUI(){
-        String output = line;
-       // infoPanel.setText(output);
-        infoPanel.setText(line);
+        infoPanel.setText(line);  
+    }
+    
+    public void clearTextPanelGUI(){
+        infoPanel.setText("");
+        line = "";
     }
 }

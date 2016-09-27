@@ -28,19 +28,18 @@ public class NumberButtonActionListener implements ActionListener{
         if (atmUI.stage == ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE)
         {
             atmUI.line += numberButton;
+            atmUI.amountOperation += numberButton;
             atmUI.updateGUI();
         } else {
             if (atmUI.stage == ConstantsAitBank.SELECT_ACCOUNT_STAGE)
             {
-                atmUI.line += "\n Select an account to continue.";
+                atmUI.line += "Select an account to continue. \n";
                 atmUI.updateGUI();
             } else if (atmUI.stage == ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE)
             {
-                atmUI.line += "\n Select an account operation to continue.";
+                atmUI.line += "Select an account operation to continue. \n";
                 atmUI.updateGUI();
             }            
-        } 
-        
-      
+        }           
     }
 }

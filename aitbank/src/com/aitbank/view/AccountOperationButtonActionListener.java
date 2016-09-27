@@ -19,19 +19,23 @@ public class AccountOperationButtonActionListener implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         if (atmUI.stage == ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE)
-        {
+        {            
             atmUI.line += accountOperationButton+"\n";
+            atmUI.accountOperation = accountOperationButton;
             atmUI.updateGUI();
             atmUI.stage = ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE;
+
         } else {
+            atmUI.clearTextPanelGUI();
             if (atmUI.stage == ConstantsAitBank.SELECT_ACCOUNT_STAGE)
             {
-                atmUI.line += "\n Select an account to continue.";
+                atmUI.line += "Select an account to continue. \n";
                 atmUI.updateGUI();
             } else if (atmUI.stage == ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE)
             {
-                atmUI.line += "\n Input the amount operation to continue.";
+                atmUI.line += "Input the amount operation to continue. \n";
                 atmUI.updateGUI();
             }
             
