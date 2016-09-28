@@ -8,6 +8,6 @@ package com.aitbank.exception;
  */
 public class IllegalATMMachineOperationException extends Exception{
     public IllegalATMMachineOperationException(String message){
-        super("IllegalATMMachineOperationException: " + message);
+        super(message);
     }
 }

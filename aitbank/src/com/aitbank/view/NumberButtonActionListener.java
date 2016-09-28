@@ -24,22 +24,30 @@ public class NumberButtonActionListener implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (atmUI.stage == ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE)
-        {
-            atmUI.line += numberButton;
-            atmUI.amountOperation += numberButton;
-            atmUI.updateGUI();
-        } else {
-            if (atmUI.stage == ConstantsAitBank.SELECT_ACCOUNT_STAGE)
-            {
-                atmUI.line += "Select an account to continue. \n";
-                atmUI.updateGUI();
-            } else if (atmUI.stage == ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE)
-            {
-                atmUI.line += "Select an account operation to continue. \n";
-                atmUI.updateGUI();
-            }            
-        }           
+    public void actionPerformed(ActionEvent e) {      
+        try {
+            switch (atmUI.stage) {
+                case ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE:
+                    atmUI.amountOperation += numberButton;
+                    atmUI.updateGUI(atmUI.line += numberButton);
+                    break;
+                case ConstantsAitBank.SELECT_ACCOUNT_STAGE:
+                    atmUI.updateGUI("Select an account to continue.");
+                    break;
+                case ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE:
+                    atmUI.updateGUI("Select an account operation to continue.");
+                    break;
+                case ConstantsAitBank.CONFIRM_CANCEL_STAGE:
+                    atmUI.updateGUI("Confirm or Cancel operation to continue.");
+                    break;           
+                default:
+                    atmUI.updateGUI("(ER230)System Error - Invalid Option. \nContact the branch.");
+                    break;
+            }           
+        } catch (Exception exception) {
+            atmUI.updateGUI("(ER231)System Error. \nContact the branch.");
+            //Simulate the log
+            System.out.println(exception.getMessage());
+        } 
     }
 }

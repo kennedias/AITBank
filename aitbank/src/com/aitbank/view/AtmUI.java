@@ -6,6 +6,9 @@
 package com.aitbank.view;
 
 import com.aitbank.constants.ConstantsAitBank;
+import com.aitbank.helper.DateTimeHelper;
+import com.aitbank.model.Customer;
+import com.aitbank.model.SavingsAccount;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -21,7 +24,7 @@ public class AtmUI {
     JFrame frame;
     JTextArea infoPanel;
     JButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0;
-    JButton btnCancel, btnConfirm, btnWithdraw, btnBalance, btnDeposit, btnHelp;
+    JButton btnCancel, btnConfirm, btnWithdraw, btnBalance, btnDeposit, btnWithdrawLimit;
     JButton btnSavings, btnNet, btnFixed, btnCheque;
     
     JPanel bottomPanel, bottomLeftPanel, numberPadPanel, bottomRightPanel;
@@ -36,12 +39,17 @@ public class AtmUI {
     String amountOperation ="";
     int stage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
     
+    Customer customerLogged = new Customer();
+    SavingsAccount savingsAccount = new SavingsAccount();
+    
+    
     public void setupUI(){
         frame = new JFrame("AIT ATM Machine");
         frame.setSize(800,250);
         
         setupButtons();
         setupPanels();
+        loginSimulate();
         
         frame.setVisible(true);        
     }
@@ -61,7 +69,7 @@ public class AtmUI {
             accountOperationPanel.add(btnBalance);
             accountOperationPanel.add(btnWithdraw);
             accountOperationPanel.add(btnDeposit);
-            accountOperationPanel.add(btnHelp);
+            accountOperationPanel.add(btnWithdrawLimit);
             
             topPanel = new JPanel(new GridLayout(1,3));
             topPanel.add(accountPanel);
@@ -111,11 +119,11 @@ public class AtmUI {
         btnBalance = new JButton(ConstantsAitBank.BALANCE_OPERATION);
         btnWithdraw = new JButton(ConstantsAitBank.WITHDRAW_OPERATION);
         btnDeposit = new JButton(ConstantsAitBank.DEPOSIT_OPERATION);
-        btnHelp = new JButton(ConstantsAitBank.HELP_OPERATION);
+        btnWithdrawLimit = new JButton(ConstantsAitBank.WITHDRAWLIMIT_OPERATION);
         btnBalance.addActionListener(new AccountOperationButtonActionListener(ConstantsAitBank.BALANCE_OPERATION, this));
         btnWithdraw.addActionListener(new AccountOperationButtonActionListener(ConstantsAitBank.WITHDRAW_OPERATION, this));
         btnDeposit.addActionListener(new AccountOperationButtonActionListener(ConstantsAitBank.DEPOSIT_OPERATION, this));
-        btnHelp.addActionListener(new AccountOperationButtonActionListener(ConstantsAitBank.HELP_OPERATION, this));
+        btnWithdrawLimit.addActionListener(new AccountOperationButtonActionListener(ConstantsAitBank.WITHDRAWLIMIT_OPERATION, this));
         
         
         /* Numbers buttons */
@@ -148,12 +156,31 @@ public class AtmUI {
 
    }
     
-    public void updateGUI(){
-        infoPanel.setText(line);  
+    public void updateGUI(String line){
+        infoPanel.setText(line+"\n");  
     }
     
     public void clearTextPanelGUI(){
         infoPanel.setText("");
         line = "";
+    }
+    
+    private void loginSimulate()
+    {
+        try {
+            DateTimeHelper dateHelper = new DateTimeHelper();
+            this.customerLogged.setCustomerID(10012);
+            this.customerLogged.setName("Bob Dylan");
+            this.savingsAccount.setAccountNumber(06541);
+            this.savingsAccount.setBranchNumber(021);
+            this.savingsAccount.setCustomer(customerLogged);
+            this.savingsAccount.setBalance(1000);
+            this.savingsAccount.setDailyWithdrawLimit(100);
+            this.savingsAccount.setDepositDate(dateHelper.generateDateFromString("01/08/2016 22:43"));
+            this.savingsAccount.setInterestRate(0.001);
+        } catch (Exception e) {
+            
+        }
+        
     }
 }

@@ -20,6 +20,7 @@ public final class ConstantsAitBank {
     public static final int SELECT_ACCOUNT_STAGE = 1;
     public static final int SELECT_ACCOUNT_OPERATION_STAGE = 2;
     public static final int INPUT_OPERATION_AMOUNT_STAGE = 3;
+    public static final int CONFIRM_CANCEL_STAGE = 4;
     
     public static final String CONFIRM_OPERATION = "Confirm";
     public static final String CANCEL_OPERATION = "Cancel";
@@ -32,7 +33,7 @@ public final class ConstantsAitBank {
     public static final String BALANCE_OPERATION = "Balance";
     public static final String WITHDRAW_OPERATION = "Withdraw";
     public static final String DEPOSIT_OPERATION = "Deposit";
-    public static final String HELP_OPERATION = "Help";
+    public static final String WITHDRAWLIMIT_OPERATION = "Help";
         
    
     

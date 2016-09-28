@@ -18,29 +18,39 @@ public class AccountOperationButtonActionListener implements ActionListener{
     }
     
     @Override
-    public void actionPerformed(ActionEvent e) {
-        
-        if (atmUI.stage == ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE)
-        {            
-            atmUI.line += accountOperationButton+"\n";
-            atmUI.accountOperation = accountOperationButton;
-            atmUI.updateGUI();
-            atmUI.stage = ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE;
-
-        } else {
+    public void actionPerformed(ActionEvent e) {      
+        try {
             atmUI.clearTextPanelGUI();
-            if (atmUI.stage == ConstantsAitBank.SELECT_ACCOUNT_STAGE)
-            {
-                atmUI.line += "Select an account to continue. \n";
-                atmUI.updateGUI();
-            } else if (atmUI.stage == ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE)
-            {
-                atmUI.line += "Input the amount operation to continue. \n";
-                atmUI.updateGUI();
-            }
-            
-        }
 
+            switch (atmUI.stage) {
+                case ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE:
+                    atmUI.accountOperation = accountOperationButton;
+                    atmUI.updateGUI(accountOperationButton);
+                    if (accountOperationButton.equals(ConstantsAitBank.BALANCE_OPERATION) ||
+                        accountOperationButton.equals(ConstantsAitBank.WITHDRAWLIMIT_OPERATION)){
+                        atmUI.stage = ConstantsAitBank.CONFIRM_CANCEL_STAGE;
+                    }else{
+                        atmUI.stage = ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE;
+                    }
+                    break;
+                case ConstantsAitBank.SELECT_ACCOUNT_STAGE:
+                    atmUI.updateGUI("Select an account to continue.");
+                    break;
+                case ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE:
+                    atmUI.updateGUI("Input the amount operation to continue.");
+                    break;
+                case ConstantsAitBank.CONFIRM_CANCEL_STAGE:
+                    atmUI.updateGUI("Confirm or Cancel operation to continue.");
+                    break;           
+                default:
+                    atmUI.updateGUI("(ER280)System Error - Invalid Option. \nContact the branch.");
+                    break;
+            }           
+        } catch (Exception exception) {
+            atmUI.updateGUI("(ER281)System Error. \nContact the branch.");
+            //Simulate the log
+            System.out.println(exception.getMessage());
+        }        
     }
             
 }
