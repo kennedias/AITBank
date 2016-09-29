@@ -24,11 +24,19 @@ public class AccountButtonActionListener implements ActionListener{
             atmUI.clearTextPanelGUI();
 
             switch (atmUI.stage) {
+                case ConstantsAitBank.LOGIN_STAGE:
+                    atmUI.updateGUI("You must be logged to continue.");
+                    break;                
                 case ConstantsAitBank.SELECT_ACCOUNT_STAGE:
                     atmUI.clearTextPanelGUI();
                     atmUI.accountType = accountButton;
-                    atmUI.updateGUI(accountButton);   
-                    atmUI.stage = ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE;
+                    if (atmUI.accountType.equals(ConstantsAitBank.SAVINGS_ACCOUNT)){
+                        atmUI.updateGUI(accountButton);   
+                        atmUI.stage = ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE;
+                    } else {
+                        atmUI.updateGUI("You do not have access to this type of account." +
+                                        "\n Please contact the branch to provide it.");
+                    }
                     break;
                 case ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE:
                     atmUI.updateGUI("Select an account operation to continue.");
@@ -45,7 +53,7 @@ public class AccountButtonActionListener implements ActionListener{
             }            
         } catch (Exception exception) {
             atmUI.updateGUI("(ER254)System Error. \nContact the branch.");
-                        //Simulate the log
+            //Simulate the log
             System.out.println(exception.getMessage());
         }
     }

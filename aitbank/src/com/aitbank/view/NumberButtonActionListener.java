@@ -27,9 +27,13 @@ public class NumberButtonActionListener implements ActionListener{
     public void actionPerformed(ActionEvent e) {      
         try {
             switch (atmUI.stage) {
+                case ConstantsAitBank.LOGIN_STAGE:
+                    atmUI.updateGUI("You must be logged to continue.");
+                    break;  
                 case ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE:
                     atmUI.amountOperation += numberButton;
-                    atmUI.updateGUI(atmUI.line += numberButton);
+                  //  atmUI.updateGUI(atmUI.amountInputed += numberButton);
+                    atmUI.updateGUI(atmUI.amountOperation);
                     break;
                 case ConstantsAitBank.SELECT_ACCOUNT_STAGE:
                     atmUI.updateGUI("Select an account to continue.");

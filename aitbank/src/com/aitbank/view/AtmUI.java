@@ -6,7 +6,6 @@
 package com.aitbank.view;
 
 import com.aitbank.constants.ConstantsAitBank;
-import com.aitbank.helper.DateTimeHelper;
 import com.aitbank.model.Customer;
 import com.aitbank.model.SavingsAccount;
 import java.awt.BorderLayout;
@@ -26,18 +25,17 @@ public class AtmUI {
     JButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0;
     JButton btnCancel, btnConfirm, btnWithdraw, btnBalance, btnDeposit, btnWithdrawLimit;
     JButton btnSavings, btnNet, btnFixed, btnCheque;
+    JButton btnLogin, btnLogout;
     
-    JPanel bottomPanel, bottomLeftPanel, numberPadPanel, bottomRightPanel;
+    JPanel bottomPanel, loginPanel, numberPadPanel, logoutPanel;
     JPanel topPanel, accountPanel, textScreenPanel, accountOperationPanel;
 
-    String line="";
-    String textAccount = "Select an account: ";
-    String textAccountOperation="Select an operation: ";
+    String amountInputed="";
     String numbers = "";
     String accountType = "";
     String accountOperation = "";
     String amountOperation ="";
-    int stage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
+    int stage = ConstantsAitBank.LOGIN_STAGE;
     
     Customer customerLogged = new Customer();
     SavingsAccount savingsAccount = new SavingsAccount();
@@ -47,10 +45,9 @@ public class AtmUI {
         frame = new JFrame("AIT ATM Machine");
         frame.setSize(800,250);
         
-        setupButtons();
-        setupPanels();
-        loginSimulate();
-        
+        this.setupButtons();
+        this.setupPanels();
+        this.updateGUI("Welcome! \n Please, do a login to start.");
         frame.setVisible(true);        
     }
         private void setupPanels(){
@@ -90,21 +87,31 @@ public class AtmUI {
             numberPadPanel.add(btn0);
             numberPadPanel.add(btnConfirm);
             
-            bottomLeftPanel = new JPanel(new GridLayout(1,1));
-            bottomRightPanel = new JPanel(new GridLayout(1,1));
+            loginPanel = new JPanel(new GridLayout(1,1));
+            loginPanel.add(btnLogin);
+            
+            logoutPanel = new JPanel(new GridLayout(1,1));
+            logoutPanel.add(btnLogout);
             
             bottomPanel = new JPanel(new GridLayout(1,1));
-            bottomPanel.add(bottomLeftPanel);
+            bottomPanel.add(loginPanel);
             bottomPanel.add(numberPadPanel);
-            bottomPanel.add(bottomRightPanel);
+            bottomPanel.add(logoutPanel);
             
             frame.add(topPanel, BorderLayout.NORTH);  
-            frame.add(bottomPanel, BorderLayout.SOUTH);
-                 
+            frame.add(bottomPanel, BorderLayout.SOUTH);                 
         
     }
         
     private void setupButtons(){
+        /* Login button */
+        btnLogin = new JButton(ConstantsAitBank.LOGIN_OPERATION);
+        btnLogin.addActionListener(new LoginButtonActionListener(ConstantsAitBank.LOGIN_OPERATION, this));
+        
+        /* Logout button */
+        btnLogout = new JButton(ConstantsAitBank.LOGOUT_OPERATION);
+        btnLogout.addActionListener(new LogoutButtonActionListener(ConstantsAitBank.LOGOUT_OPERATION, this));
+        
         /* Account buttons */
         btnSavings = new JButton(ConstantsAitBank.SAVINGS_ACCOUNT);
         btnNet = new JButton(ConstantsAitBank.NET_ACCOUNT);
@@ -156,31 +163,22 @@ public class AtmUI {
 
    }
     
-    public void updateGUI(String line){
-        infoPanel.setText(line+"\n");  
+    public void updateGUI(String lineToShow){
+        infoPanel.setText(" "+lineToShow+"\n");  
     }
     
     public void clearTextPanelGUI(){
         infoPanel.setText("");
-        line = "";
+        amountInputed = "";
     }
     
-    private void loginSimulate()
+    public void initializeNewOperation()
     {
-        try {
-            DateTimeHelper dateHelper = new DateTimeHelper();
-            this.customerLogged.setCustomerID(10012);
-            this.customerLogged.setName("Bob Dylan");
-            this.savingsAccount.setAccountNumber(06541);
-            this.savingsAccount.setBranchNumber(021);
-            this.savingsAccount.setCustomer(customerLogged);
-            this.savingsAccount.setBalance(1000);
-            this.savingsAccount.setDailyWithdrawLimit(100);
-            this.savingsAccount.setDepositDate(dateHelper.generateDateFromString("01/08/2016 22:43"));
-            this.savingsAccount.setInterestRate(0.001);
-        } catch (Exception e) {
-            
-        }
-        
+      //  this.amountInputed = "";
+        this.numbers = "";
+        this.accountType = "";
+        this.accountOperation = "";
+        this.amountOperation ="";
+        this.stage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
     }
 }

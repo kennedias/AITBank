@@ -3,15 +3,9 @@ package com.aitbank.view;
 import com.aitbank.constants.ConstantsAitBank;
 import com.aitbank.exception.IllegalATMMachineOperationException;
 import com.aitbank.exception.IllegalBankAccountOperationException;
-import com.aitbank.helper.DateTimeHelper;
 import com.aitbank.model.ATMMachine;
-import com.aitbank.model.Customer;
-import com.aitbank.model.SavingsAccount;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -30,27 +24,33 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if (confirmCancelOperationButton.equals(ConstantsAitBank.CANCEL_OPERATION)) {
+            if ((confirmCancelOperationButton.equals(ConstantsAitBank.CANCEL_OPERATION)) &&
+                (atmUI.stage != ConstantsAitBank.LOGIN_STAGE)) {
                 atmUI.clearTextPanelGUI();
                 atmUI.stage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
+                atmUI.updateGUI("Operation Canceled.");
             } else if (confirmCancelOperationButton.equals(ConstantsAitBank.CONFIRM_OPERATION)){
                 switch (atmUI.stage) {
+                    case ConstantsAitBank.LOGIN_STAGE:
+                        atmUI.updateGUI("You must be logged to continue.");
+                        break; 
                     case ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE:
-                        this.executeConfirmOperation();
+                        this.executeConfirmOperation();                            
                         break;
-                    case ConstantsAitBank.CONFIRM_CANCEL_STAGE:
+                    case ConstantsAitBank.CONFIRM_CANCEL_STAGE:                        
                         this.executeConfirmOperation();
+                        atmUI.initializeNewOperation();
                         break;
                     case ConstantsAitBank.SELECT_ACCOUNT_STAGE:
                         atmUI.updateGUI("Select an account to continue.");
                         break;
                     case ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE:
-                            atmUI.updateGUI("Select an account operation to continue.");
+                        atmUI.updateGUI("Select an account operation to continue.");
                         break;
                     default:
                         atmUI.updateGUI("(ER190)System Error - Invalid Option. \nContact the branch.");
                         break;
-                }
+                }                
             } 
         } catch (Exception exception) {
             atmUI.updateGUI("(ER191)System Error. \nContact the branch.");
@@ -70,7 +70,6 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
                     atmUI.accountType = "Invalid Account Type.";
                     break;
             }                
-            atmUI.stage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
         } catch (Exception exception) {
             atmUI.updateGUI("(ER198)System Error - Invalid Option. \nContact the branch.");
             //Simulate the log
@@ -85,14 +84,24 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
                     atmUI.updateGUI("Balance: " + String.valueOf(atmUI.savingsAccount.getBalance()));
                     break;
                 case ConstantsAitBank.DEPOSIT_OPERATION:
-                    atmUI.savingsAccount.makeAccountDeposit(Double.parseDouble(atmUI.amountOperation));
-                    atmUI.updateGUI("Deposit completed with success. \n New balance: " + String.valueOf(atmUI.savingsAccount.getBalance()));
+                    if (atmUI.amountOperation == null || atmUI.amountOperation.isEmpty()){
+                        atmUI.updateGUI("Please, inform a valid amount to proceed.");
+                    } else {
+                        atmUI.savingsAccount.makeAccountDeposit(Double.parseDouble(atmUI.amountOperation));
+                        atmUI.updateGUI("Deposit completed with success. \n New balance: " + String.valueOf(atmUI.savingsAccount.getBalance()));
+                        atmUI.initializeNewOperation();                            
+                    }
                     break;
                 case ConstantsAitBank.WITHDRAW_OPERATION:
-                    ATMMachine atmMachine = new ATMMachine();
-                    atmMachine.executeWithdraw(Double.parseDouble(atmUI.amountOperation));
-                    atmUI.savingsAccount.makeAccountWithdraw(Double.parseDouble(atmUI.amountOperation));
-                    atmUI.updateGUI("Withdraw completed with success. \n New balance: " + String.valueOf(atmUI.savingsAccount.getBalance()));
+                    if (atmUI.amountOperation == null || atmUI.amountOperation.isEmpty()){
+                        atmUI.updateGUI("Please, inform a valid amount to proceed.");
+                    } else {
+                        ATMMachine atmMachine = new ATMMachine();
+                        atmMachine.executeWithdraw(Double.parseDouble(atmUI.amountOperation));
+                        atmUI.savingsAccount.makeAccountWithdraw(Double.parseDouble(atmUI.amountOperation));
+                        atmUI.updateGUI("Withdraw completed with success. \n New balance: " + String.valueOf(atmUI.savingsAccount.getBalance()));
+                        atmUI.initializeNewOperation();                            
+                    }
                     break;
                 case ConstantsAitBank.WITHDRAWLIMIT_OPERATION:
                     atmUI.updateGUI("Daily withdraw limit..: " + String.valueOf(atmUI.savingsAccount.getDailyWithdrawLimit()) + "\n"
@@ -102,12 +111,21 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
                     atmUI.updateGUI("(ER193)System Error - Invalid Option. \nContact the branch.");
                     break;
             }
-        } catch (IllegalATMMachineOperationException | IllegalBankAccountOperationException exception) {
+        } catch (IllegalATMMachineOperationException exception) {
+            atmUI.updateGUI(exception.getMessage() + "\nInform a valid amount.");
+            atmUI.amountOperation = "";
+            //Simulate the log
+            System.out.println(exception.getMessage());
+        }catch (IllegalBankAccountOperationException exception) {
             atmUI.updateGUI(exception.getMessage());
+            //Simulate the log
+            System.out.println(exception.getMessage());
+            atmUI.initializeNewOperation();
         } catch (Exception exception) {
             atmUI.updateGUI("(ER194)System Error - Invalid Option. \nContact the branch.");
             //Simulate the log
             System.out.println(exception.getMessage());
+            atmUI.initializeNewOperation();
         }
     }
 }

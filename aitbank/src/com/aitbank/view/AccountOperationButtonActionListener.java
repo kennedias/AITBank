@@ -31,8 +31,17 @@ public class AccountOperationButtonActionListener implements ActionListener{
                         atmUI.stage = ConstantsAitBank.CONFIRM_CANCEL_STAGE;
                     }else{
                         atmUI.stage = ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE;
+                        if (accountOperationButton.equals(ConstantsAitBank.WITHDRAW_OPERATION)){
+                            atmUI.updateGUI("Notes available for withdraw: 20, 50, 100." +
+                                            "\nMake sure the amount is valid.");
+                        }else if(accountOperationButton.equals(ConstantsAitBank.DEPOSIT_OPERATION)){
+                            atmUI.updateGUI("Inform the amount of deposit");
+                        }
                     }
-                    break;
+                    break;                    
+                case ConstantsAitBank.LOGIN_STAGE:
+                    atmUI.updateGUI("You must be logged to continue.");
+                    break;  
                 case ConstantsAitBank.SELECT_ACCOUNT_STAGE:
                     atmUI.updateGUI("Select an account to continue.");
                     break;
