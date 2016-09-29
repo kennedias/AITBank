@@ -1,8 +1,6 @@
 package com.aitbank.constants;
 
-import com.aitbank.view.AccountButtonActionListener;
 import java.text.SimpleDateFormat;
-import javax.swing.JButton;
 
 /**
  * Constants class for AitBank project.

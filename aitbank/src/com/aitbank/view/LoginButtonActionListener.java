@@ -23,6 +23,12 @@ public class LoginButtonActionListener implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        /* Verify the stage of the operation and do the respective
+            action if it is the respective class operation.
+
+            Operation -> Perform login.
+            Execute the login and create the objects for Customer and Account.
+        **/         
         try {
             atmUI.clearTextPanelGUI();
 
@@ -51,17 +57,9 @@ public class LoginButtonActionListener implements ActionListener {
             atmUI.updateGUI("(ER254)System Error. \nContact the branch.");
             //Simulate the log
             System.out.println(exception.getMessage());
-        }
-        
-        
-        
-        
-        
+        }        
     } 
-        
-        
-        
-        
+                
     private void performLogin() {    
         
         try {

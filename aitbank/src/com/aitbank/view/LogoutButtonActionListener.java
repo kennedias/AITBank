@@ -20,6 +20,12 @@ public class LogoutButtonActionListener implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        /* Verify the stage of the operation and do the respective
+            action if it is the respective class operation.
+
+            Operation -> Perform logout.
+            Execute the logout of the ATM machine.
+        **/
         try {
             if(atmUI.operationStage != ConstantsAitBank.LOGIN_STAGE){            
                 atmUI.clearTextPanelGUI();

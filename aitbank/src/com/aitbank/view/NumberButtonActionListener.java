@@ -25,14 +25,18 @@ public class NumberButtonActionListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {      
+        /* Verify the stage of the operation and do the respective
+            action if it is the respective class operation.
+
+            Operation -> Input an operation amount.
+        **/
         try {
             switch (atmUI.operationStage) {
                 case ConstantsAitBank.LOGIN_STAGE:
                     atmUI.updateGUI("You must be logged to continue.");
                     break;  
                 case ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE:
-                    atmUI.amountOperation += numberButton;
-                  //  atmUI.updateGUI(atmUI.amountInputed += numberButton);
+                    atmUI.amountOperation += numberButton;                  
                     atmUI.updateGUI(atmUI.amountOperation);
                     break;
                 case ConstantsAitBank.SELECT_ACCOUNT_STAGE:

@@ -1,11 +1,7 @@
 package com.aitbank;
 
-import com.aitbank.model.Customer;
 import com.aitbank.view.AtmUI;
-import com.aitbank.view.ChequeAccountView;
-import com.aitbank.view.FixedAccountView;
-import com.aitbank.view.NetSaverAccountView;
-import com.aitbank.view.SavingsAccountView;
+
 
 /**
  * The main class
@@ -19,33 +15,8 @@ public class Aitbank {
     public static void main(String[] args) {
         
         AtmUI atm = new AtmUI();
-        atm.setupUI();
+        atm.setupUI();       
         
-        /*
-        Customer customer = new Customer();
-        customer.setCustomerID(1);
-        customer.setName("Bob");
-        
-        System.out.println("\n------------------------- Cheque Account ----------"
-                + "------------------------------");
-        ChequeAccountView chequeAccountView = new ChequeAccountView();
-        chequeAccountView.ChequeAccountView(customer);
-
-        System.out.println("\n------------------------- Savings Account ---------"
-                + "-------------------------------");        
-        SavingsAccountView savingsAccountView = new SavingsAccountView();
-        savingsAccountView.SavingsAccountView(customer);
-        
-        System.out.println("\n------------------------- Net-Saver Account --------"
-                + "--------------------------------");
-        NetSaverAccountView netSaverAccountView = new NetSaverAccountView();
-        netSaverAccountView.NetSaverAccountView(customer);
-
-        System.out.println("\n------------------------- Fixed Account --------"
-                + "--------------------------------");
-        FixedAccountView fixedAccountView = new FixedAccountView();
-        fixedAccountView.FixedAccountView(customer);      
-*/
     }
 
 }

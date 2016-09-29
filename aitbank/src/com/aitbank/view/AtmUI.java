@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aitbank.view;
 
 import com.aitbank.constants.ConstantsAitBank;
@@ -38,8 +33,7 @@ public class AtmUI {
     int operationStage = ConstantsAitBank.LOGIN_STAGE;
     
     Customer customerLogged = new Customer();
-    SavingsAccount savingsAccount = new SavingsAccount();
-    
+    SavingsAccount savingsAccount = new SavingsAccount();    
     
     public void setupUI(){
         frame = new JFrame("AIT ATM Machine");
@@ -60,8 +54,7 @@ public class AtmUI {
             textScreenPanel = new JPanel(new GridLayout(1,1));
             infoPanel = new JTextArea();
             infoPanel.setEditable(false);
-            textScreenPanel.add(infoPanel);
-            
+            textScreenPanel.add(infoPanel);            
             
             accountOperationPanel = new JPanel(new GridLayout(4,1));
             accountOperationPanel.add(btnBalance);
@@ -108,8 +101,6 @@ public class AtmUI {
         /* Login button */
         btnLogin = new JButton(ConstantsAitBank.LOGIN_OPERATION);
         btnLogin.addActionListener(new LoginButtonActionListener(ConstantsAitBank.LOGIN_OPERATION, this));
-       // btnLogin.setEnabled(false);
-        
         
         /* Logout button */
         btnLogout = new JButton(ConstantsAitBank.LOGOUT_OPERATION);
@@ -177,7 +168,6 @@ public class AtmUI {
     
     public void initializeNewOperation()
     {
-      //  this.amountInputed = "";
         this.numbers = "";
         this.accountType = "";
         this.accountOperation = "";

@@ -23,6 +23,17 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        /* Verify the stage of the operation and do the respective
+            action if it is the respective class operation.
+
+            Operation -> Confirm or Cancel.
+            The user can cancel an operation any time after logging on. Canceling
+            means that the operation back to the choose account stage.
+            For confirm button, it is necessary to check before proceed:
+                - Type of account;
+                - Account operation;
+                - Amount, if applicable.
+        **/     
         try {
             if ((confirmCancelOperationButton.equals(ConstantsAitBank.CANCEL_OPERATION)) &&
                 (atmUI.operationStage != ConstantsAitBank.LOGIN_STAGE)) {
@@ -61,7 +72,11 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
 
     private void executeConfirmOperation() {
         try {
-        //    atmUI.updateGUI(atmUI.accountType + " " + atmUI.accountOperation + " " + atmUI.amountOperation);
+            /*
+            The operation for the others accounts type should be 
+            implemented here.
+            First delivery contains only Savings Account operations.
+            */
             switch (atmUI.accountType) {
                 case ConstantsAitBank.SAVINGS_ACCOUNT:
                     this.executeSavingsOperations();
@@ -72,12 +87,13 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
             }                
         } catch (Exception exception) {
             atmUI.updateGUI("(ER198)System Error - Invalid Option. \nContact the branch.");
-            //Simulate the log
+            //Simulate the error logging
             System.out.println(exception.getMessage());
         }
     }
     
     private void executeSavingsOperations() {
+        /* Executing Savings Account Operations */
         try {
             switch (atmUI.accountOperation) {
                 case ConstantsAitBank.BALANCE_OPERATION:
@@ -88,7 +104,8 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
                         atmUI.updateGUI("Please, inform a valid amount to proceed.");
                     } else {
                         atmUI.savingsAccount.makeAccountDeposit(Double.parseDouble(atmUI.amountOperation));
-                        atmUI.updateGUI("Deposit completed with success. \n New balance: " + String.valueOf(atmUI.savingsAccount.getBalance()));
+                        atmUI.updateGUI("Deposit completed with success. \n New balance: " 
+                                        + String.valueOf(atmUI.savingsAccount.getBalance()));
                         atmUI.initializeNewOperation();                            
                     }
                     break;
@@ -96,16 +113,25 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
                     if (atmUI.amountOperation == null || atmUI.amountOperation.isEmpty()){
                         atmUI.updateGUI("Please, inform a valid amount to proceed.");
                     } else {
-                        ATMMachine atmMachine = new ATMMachine();
+                        /* Check if the amount inputed is possible to make a withdraw
+                           considering the notes available.
+                           Throws a business exception if not.     
+                           If the amount is valid, the next step is check the
+                           account requiriments to perform the withdraw.
+                        */
+                        ATMMachine atmMachine = new ATMMachine(); 
                         atmMachine.executeWithdraw(Double.parseDouble(atmUI.amountOperation));
                         atmUI.savingsAccount.makeAccountWithdraw(Double.parseDouble(atmUI.amountOperation));
-                        atmUI.updateGUI("Withdraw completed with success. \n New balance: " + String.valueOf(atmUI.savingsAccount.getBalance()));
+                        atmUI.updateGUI("Withdraw completed with success. \n New balance: " 
+                                        + String.valueOf(atmUI.savingsAccount.getBalance()));
                         atmUI.initializeNewOperation();                            
                     }
                     break;
                 case ConstantsAitBank.WITHDRAWLIMIT_OPERATION:
-                    atmUI.updateGUI("Daily withdraw limit..: " + String.valueOf(atmUI.savingsAccount.getDailyWithdrawLimit()) + "\n"
-                            + "Daily withdraw done...: " + String.valueOf(atmUI.savingsAccount.getDailyWithdrawAmountRealized()));
+                    atmUI.updateGUI("Daily withdraw limit..: " + 
+                            String.valueOf(atmUI.savingsAccount.getDailyWithdrawLimit()) + 
+                            "\nDaily withdraw done...: " + 
+                            String.valueOf(atmUI.savingsAccount.getDailyWithdrawAmountRealized()));
                     break;
                 default:
                     atmUI.updateGUI("(ER193)System Error - Invalid Option. \nContact the branch.");
@@ -114,16 +140,16 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
         } catch (IllegalATMMachineOperationException exception) {
             atmUI.updateGUI(exception.getMessage() + "\nInform a valid amount.");
             atmUI.amountOperation = "";
-            //Simulate the log
+            //Simulate error logging
             System.out.println(exception.getMessage());
         }catch (IllegalBankAccountOperationException exception) {
             atmUI.updateGUI(exception.getMessage());
-            //Simulate the log
+            //Simulate error logging
             System.out.println(exception.getMessage());
             atmUI.initializeNewOperation();
         } catch (Exception exception) {
             atmUI.updateGUI("(ER194)System Error - Invalid Option. \nContact the branch.");
-            //Simulate the log
+            //Simulate error logging
             System.out.println(exception.getMessage());
             atmUI.initializeNewOperation();
         }

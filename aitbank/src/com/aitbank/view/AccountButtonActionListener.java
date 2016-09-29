@@ -20,9 +20,18 @@ public class AccountButtonActionListener implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
+        try {            
             atmUI.clearTextPanelGUI();
 
+            /* Verify the stage of the operation and do the respective
+                action if it is the respective class operation.                
+                
+                Operation -> Select a bank account.
+                In this simulation, the customer used do not have 
+                other accounts than Savings.
+                The errors code are specific for that occurence, it will
+                help the support to look for the error points.            
+            **/
             switch (atmUI.operationStage) {
                 case ConstantsAitBank.LOGIN_STAGE:
                     atmUI.updateGUI("You must be logged to continue.");
@@ -53,7 +62,7 @@ public class AccountButtonActionListener implements ActionListener{
             }            
         } catch (Exception exception) {
             atmUI.updateGUI("(ER254)System Error. \nContact the branch.");
-            //Simulate the log
+            //Simulate the error logging
             System.out.println(exception.getMessage());
         }
     }

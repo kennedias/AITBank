@@ -22,15 +22,28 @@ public class AccountOperationButtonActionListener implements ActionListener{
         try {
             atmUI.clearTextPanelGUI();
 
+            /* Verify the stage of the operation and do the respective
+                action if it is the respective class operation.
+            
+                Operation -> Select a account operation.
+                The user have to choose an account operation to execute.
+                For Balance and Withdraw Limit it is necessary only confirm
+                the operation pressing Confirm button.
+                For Deposit and Withdraw it is necessary to inform a valid
+                operation amount to proceed.
+            **/
             switch (atmUI.operationStage) {
                 case ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE:
                     atmUI.accountOperation = accountOperationButton;
                     atmUI.updateGUI(accountOperationButton);
                     if (accountOperationButton.equals(ConstantsAitBank.BALANCE_OPERATION) ||
                         accountOperationButton.equals(ConstantsAitBank.WITHDRAWLIMIT_OPERATION)){
+                        
                         atmUI.operationStage = ConstantsAitBank.CONFIRM_CANCEL_STAGE;
+                        
                     }else{
                         atmUI.operationStage = ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE;
+                        
                         if (accountOperationButton.equals(ConstantsAitBank.WITHDRAW_OPERATION)){
                             atmUI.updateGUI("Notes available for withdraw: 20, 50, 100." +
                                             "\nMake sure the amount is valid.");
@@ -57,7 +70,7 @@ public class AccountOperationButtonActionListener implements ActionListener{
             }           
         } catch (Exception exception) {
             atmUI.updateGUI("(ER281)System Error. \nContact the branch.");
-            //Simulate the log
+            //Simulate the error logging
             System.out.println(exception.getMessage());
         }        
     }
