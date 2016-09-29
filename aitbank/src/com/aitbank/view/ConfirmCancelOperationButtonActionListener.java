@@ -25,12 +25,12 @@ public class ConfirmCancelOperationButtonActionListener implements ActionListene
     public void actionPerformed(ActionEvent e) {
         try {
             if ((confirmCancelOperationButton.equals(ConstantsAitBank.CANCEL_OPERATION)) &&
-                (atmUI.stage != ConstantsAitBank.LOGIN_STAGE)) {
+                (atmUI.operationStage != ConstantsAitBank.LOGIN_STAGE)) {
                 atmUI.clearTextPanelGUI();
-                atmUI.stage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
+                atmUI.operationStage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
                 atmUI.updateGUI("Operation Canceled.");
             } else if (confirmCancelOperationButton.equals(ConstantsAitBank.CONFIRM_OPERATION)){
-                switch (atmUI.stage) {
+                switch (atmUI.operationStage) {
                     case ConstantsAitBank.LOGIN_STAGE:
                         atmUI.updateGUI("You must be logged to continue.");
                         break; 

@@ -26,7 +26,7 @@ public class NumberButtonActionListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {      
         try {
-            switch (atmUI.stage) {
+            switch (atmUI.operationStage) {
                 case ConstantsAitBank.LOGIN_STAGE:
                     atmUI.updateGUI("You must be logged to continue.");
                     break;  

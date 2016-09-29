@@ -35,7 +35,7 @@ public class AtmUI {
     String accountType = "";
     String accountOperation = "";
     String amountOperation ="";
-    int stage = ConstantsAitBank.LOGIN_STAGE;
+    int operationStage = ConstantsAitBank.LOGIN_STAGE;
     
     Customer customerLogged = new Customer();
     SavingsAccount savingsAccount = new SavingsAccount();
@@ -47,7 +47,7 @@ public class AtmUI {
         
         this.setupButtons();
         this.setupPanels();
-        this.updateGUI("Welcome! \n Please, do a login to start.");
+        this.updateGUI("Welcome! \n Please, login to start.");
         frame.setVisible(true);        
     }
         private void setupPanels(){
@@ -61,6 +61,7 @@ public class AtmUI {
             infoPanel = new JTextArea();
             infoPanel.setEditable(false);
             textScreenPanel.add(infoPanel);
+            
             
             accountOperationPanel = new JPanel(new GridLayout(4,1));
             accountOperationPanel.add(btnBalance);
@@ -107,6 +108,8 @@ public class AtmUI {
         /* Login button */
         btnLogin = new JButton(ConstantsAitBank.LOGIN_OPERATION);
         btnLogin.addActionListener(new LoginButtonActionListener(ConstantsAitBank.LOGIN_OPERATION, this));
+       // btnLogin.setEnabled(false);
+        
         
         /* Logout button */
         btnLogout = new JButton(ConstantsAitBank.LOGOUT_OPERATION);
@@ -179,6 +182,6 @@ public class AtmUI {
         this.accountType = "";
         this.accountOperation = "";
         this.amountOperation ="";
-        this.stage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
+        this.operationStage = ConstantsAitBank.SELECT_ACCOUNT_STAGE;
     }
 }

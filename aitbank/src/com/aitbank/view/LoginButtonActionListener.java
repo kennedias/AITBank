@@ -26,7 +26,7 @@ public class LoginButtonActionListener implements ActionListener {
         try {
             atmUI.clearTextPanelGUI();
 
-            switch (atmUI.stage) {
+            switch (atmUI.operationStage) {
                 case ConstantsAitBank.LOGIN_STAGE:
                     this.performLogin();
                     atmUI.initializeNewOperation();

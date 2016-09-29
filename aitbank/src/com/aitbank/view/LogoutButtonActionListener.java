@@ -21,9 +21,9 @@ public class LogoutButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if(atmUI.stage != ConstantsAitBank.LOGIN_STAGE){            
+            if(atmUI.operationStage != ConstantsAitBank.LOGIN_STAGE){            
                 atmUI.clearTextPanelGUI();
-                atmUI.stage = ConstantsAitBank.LOGIN_STAGE;
+                atmUI.operationStage = ConstantsAitBank.LOGIN_STAGE;
                 atmUI.updateGUI("Logout done with success. \n Thank you for come to us.");
             }
         } catch (Exception exception) {

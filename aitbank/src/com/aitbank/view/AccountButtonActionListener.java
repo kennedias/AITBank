@@ -23,7 +23,7 @@ public class AccountButtonActionListener implements ActionListener{
         try {
             atmUI.clearTextPanelGUI();
 
-            switch (atmUI.stage) {
+            switch (atmUI.operationStage) {
                 case ConstantsAitBank.LOGIN_STAGE:
                     atmUI.updateGUI("You must be logged to continue.");
                     break;                
@@ -32,7 +32,7 @@ public class AccountButtonActionListener implements ActionListener{
                     atmUI.accountType = accountButton;
                     if (atmUI.accountType.equals(ConstantsAitBank.SAVINGS_ACCOUNT)){
                         atmUI.updateGUI(accountButton);   
-                        atmUI.stage = ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE;
+                        atmUI.operationStage = ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE;
                     } else {
                         atmUI.updateGUI("You do not have access to this type of account." +
                                         "\n Please contact the branch to provide it.");

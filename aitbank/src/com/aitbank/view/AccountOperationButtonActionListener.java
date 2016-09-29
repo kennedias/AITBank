@@ -22,15 +22,15 @@ public class AccountOperationButtonActionListener implements ActionListener{
         try {
             atmUI.clearTextPanelGUI();
 
-            switch (atmUI.stage) {
+            switch (atmUI.operationStage) {
                 case ConstantsAitBank.SELECT_ACCOUNT_OPERATION_STAGE:
                     atmUI.accountOperation = accountOperationButton;
                     atmUI.updateGUI(accountOperationButton);
                     if (accountOperationButton.equals(ConstantsAitBank.BALANCE_OPERATION) ||
                         accountOperationButton.equals(ConstantsAitBank.WITHDRAWLIMIT_OPERATION)){
-                        atmUI.stage = ConstantsAitBank.CONFIRM_CANCEL_STAGE;
+                        atmUI.operationStage = ConstantsAitBank.CONFIRM_CANCEL_STAGE;
                     }else{
-                        atmUI.stage = ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE;
+                        atmUI.operationStage = ConstantsAitBank.INPUT_OPERATION_AMOUNT_STAGE;
                         if (accountOperationButton.equals(ConstantsAitBank.WITHDRAW_OPERATION)){
                             atmUI.updateGUI("Notes available for withdraw: 20, 50, 100." +
                                             "\nMake sure the amount is valid.");
